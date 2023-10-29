@@ -1,0 +1,40 @@
+query 1 : Berapa rata-rata umur customer jika dilihat dari marital statusnya ?
+SELECT 
+    CASE 
+        WHEN "Marital Status" = '' THEN 'Tidak Diketahui'
+        ELSE "Marital Status"  
+    END AS MaritalStatus,
+    AVG(Age) AS rata_rata_umur
+FROM 
+    Customer
+GROUP BY 
+    MaritalStatus;
+   
+query 2 : Berapa rata-rata umur customer jika dilihat dari gender nya ?
+SELECT 
+    CASE 
+        WHEN Gender = 0 THEN 'Wanita'
+        WHEN Gender = 1 THEN 'Pria'
+        ELSE 'Tidak Diketahui'
+    END AS JenisKelamin,
+    AVG(Age) AS rata_rata_umur
+FROM 
+    Customer
+GROUP BY 
+    Gender;
+    
+query 3 : Tentukan nama store dengan total quantity terbanyak!
+SELECT StoreName, SUM(Qty) AS TotalQuantity
+FROM Transaction
+JOIN Store ON Transaction.StoreID = Store.StoreID
+GROUP BY StoreName
+ORDER BY TotalQuantity desc
+LIMIT 1;
+
+query 4 : Tentukan nama produk terlaris dengan total amount terbanyak!
+SELECT "Product Name" , SUM(TotalAmount) AS TotalSalesAmount
+FROM Transaction
+JOIN Product ON Transaction.ProductID = Product.ProductID
+GROUP BY "Product Name" 
+ORDER BY TotalSalesAmount desc
+LIMIT 1;
